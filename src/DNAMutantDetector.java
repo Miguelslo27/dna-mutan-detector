@@ -6,10 +6,10 @@ public class DNAMutantDetector {
         new DNAAnalyzer();
         DNAAnalyzer.isMutant(new String[] {
             "ATGCGA",
-            "CAGTGC",
+            "CAGTTC",
             "TTATGT",
-            "AGAAGG",
-            "CCCCTA",
+            "AGTCGG",
+            "CTCTTA",
             "TCACTG"
         });
     }
