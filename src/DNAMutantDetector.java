@@ -4,7 +4,8 @@ public class DNAMutantDetector {
         System.out.println("Let's checkout if there is a mutant here!");
 
         new DNAAnalyzer();
-        DNAAnalyzer.isMutant(new String[] {
+
+        boolean thisIsAMutant = DNAAnalyzer.isMutant(new String[] {
             "ATGCGA",
             "CAGTTC",
             "TTATGT",
@@ -12,5 +13,7 @@ public class DNAMutantDetector {
             "CTCTTA",
             "TCACTG"
         });
+
+        System.out.printf("The DNA is from a mutant? %b", thisIsAMutant);
     }
 }
