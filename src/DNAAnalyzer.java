@@ -18,10 +18,6 @@ public class DNAAnalyzer {
         for (int c = 0; c < Arrays.stream(dnaMolecule).count(); c++) {
             System.out.printf("Chain %s%n", dnaMolecule[c]);
 
-            int basesCountInARow = 0;
-            int basesCountInAColumn = 0;
-            int basesCountInEastDiagonal = 0;
-            int basesCountInWestDiagonal = 0;
             String chain = dnaMolecule[c];
 
             for (int b = 0; b < chain.length(); b++) {
@@ -31,34 +27,46 @@ public class DNAAnalyzer {
                 String base = Character.toString(chain.toCharArray()[b]);
 
                 // Test the column
-                if (b + 3 == chain.length()) {
-                    // This is out of row scope, so can brake the loop here
-                    break;
+                if (b + 3 < chain.length()) {
+                    String baseOneStepNext = Character.toString(chain.toCharArray()[b + 1]);
+                    String baseTwoStepsNext = Character.toString(chain.toCharArray()[b + 2]);
+                    String baseThreeStepsNext = Character.toString(chain.toCharArray()[b + 3]);
+
+                    System.out.printf("%s - %s - %s - %s%n", base, baseOneStepNext, baseTwoStepsNext, baseThreeStepsNext);
+                    System.out.printf("For %s == %s: %b%n", base, baseOneStepNext, base.equals(baseOneStepNext));
+                    System.out.printf("For %s == %s: %b%n", base, baseTwoStepsNext, base.equals(baseTwoStepsNext));
+                    System.out.printf("For %s == %s: %b%n", base, baseThreeStepsNext, base.equals(baseThreeStepsNext));
+
+                    if (base.equals(baseOneStepNext) && base.equals(baseTwoStepsNext) && base.equals(baseThreeStepsNext)) {
+                        isMutantDNA = true;
+                        break;
+                    }
                 }
 
-                String baseOneStepNext = Character.toString(chain.toCharArray()[b + 1]);
-                String baseTwoStepsNext = Character.toString(chain.toCharArray()[b + 2]);
-                String baseThreeStepsNext = Character.toString(chain.toCharArray()[b + 3]);
-
-                if (c + 3 == Arrays.stream(dnaMolecule).count()) {
-                    // this is out of the column scope, so can brake the loop here
-                    break;
+                if (c + 3 < Arrays.stream(dnaMolecule).count()) {
+                    String baseOneStepBelow = Character.toString(dnaMolecule[c + 1].toCharArray()[b]);
+                    String baseTwoStepsBelow = Character.toString(dnaMolecule[c + 2].toCharArray()[b]);
+                    String baseThreeStepsBelow = Character.toString(dnaMolecule[c + 3].toCharArray()[b]);
                 }
 
-                String baseOneStepBelow = Character.toString(dnaMolecule[c + 1].toCharArray()[b]);
-                String baseTwoStepsBelow = Character.toString(dnaMolecule[c + 2].toCharArray()[b]);
-                String baseThreeStepsBelow = Character.toString(dnaMolecule[c + 3].toCharArray()[b]);
+                if (b + 3 < chain.length() && c + 3 < Arrays.stream(dnaMolecule).count()) {
+                    String baseOneStepDiagonalEast = Character.toString(dnaMolecule[c + 1].toCharArray()[b + 1]);
+                    String baseTwoStepDiagonalEast = Character.toString(dnaMolecule[c + 2].toCharArray()[b + 2]);
+                    String baseThreeStepDiagonalEast = Character.toString(dnaMolecule[c + 3].toCharArray()[b + 3]);
+                }
 
-                String baseOneStepDiagonalEast = Character.toString(dnaMolecule[c + 1].toCharArray()[b + 1]);
-                String baseTwoStepDiagonalEast = Character.toString(dnaMolecule[c + 2].toCharArray()[b + 2]);
-                String baseThreeStepDiagonalEast = Character.toString(dnaMolecule[c + 2].toCharArray()[b + 3]);
-
-                //if (base == chain.toCharArray()[b])
+                if (b - 3 > 0 && c + 3 < Arrays.stream(dnaMolecule).count()) {
+                    String baseOneStepDiagonalWest = Character.toString(dnaMolecule[c + 1].toCharArray()[b - 1]);
+                    String baseTwoStepDiagonalWest = Character.toString(dnaMolecule[c + 2].toCharArray()[b - 2]);
+                    String baseThreeStepDiagonalWest = Character.toString(dnaMolecule[c + 3].toCharArray()[b - 3]);
+                }
             }
 
             System.out.println("===");
             if (isMutantDNA) break;
         }
+
+        System.out.printf("This is a Mutant DNA? %b", isMutantDNA);
 
         return isMutantDNA;
     }
@@ -70,9 +78,6 @@ public class DNAAnalyzer {
         moleculeSize = (int) Arrays.stream(dnaMolecule).count();
 
         for (String chain : dnaMolecule) {
-            // System.out.printf("Chain %s%n", chain);
-            // System.out.printf("The chain has %d bases%n", chain.length());
-
             if ((!isTheFirstChain && chainLength != chain.length()) || moleculeSize != chain.length()) {
                 isValid = false;
                 break;
