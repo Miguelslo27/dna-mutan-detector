@@ -1,5 +1,5 @@
 public class DNAMutantDetector {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         // Here starts the project
         System.out.println("Let's checkout if there is a mutant here!");
 
