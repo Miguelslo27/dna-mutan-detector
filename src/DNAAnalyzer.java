@@ -72,10 +72,11 @@ public class DNAAnalyzer {
         return isMutantDNA;
     }
 
-    public static boolean isValidDNA(String[] dnaMolecule) {
+    public static boolean isValidDNA(String[] dnaMolecule) throws Exception {
         int chainLength = 0;
         boolean isTheFirstChain = true;
         boolean isValid = true;
+        String dnaAcceptableBases = "ATCG";
         moleculeSize = (int) Arrays.stream(dnaMolecule).count();
 
         for (String chain : dnaMolecule) {
@@ -89,7 +90,12 @@ public class DNAAnalyzer {
                 isTheFirstChain = false;
             }
 
-            // Check bases types
+            for (Character base : chain.toCharArray()) {
+                // Check the base type
+                if (!dnaAcceptableBases.contains(Character.toString(base))) {
+                    throw new Exception("The DNA Molecule is defective");
+                }
+            }
         }
 
         return isValid;
