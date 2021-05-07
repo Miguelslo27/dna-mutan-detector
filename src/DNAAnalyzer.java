@@ -5,6 +5,7 @@ public class DNAAnalyzer {
 
     public static boolean isMutant(String[] dnaMolecule) throws Exception {
         boolean isMutantDNA = false;
+        int mutantDNACounter = 0;
 
         if (!isValidDNA(dnaMolecule)) {
             throw new Exception("The DNA Molecule is defective");
@@ -24,8 +25,12 @@ public class DNAAnalyzer {
                     String baseThreeStepsNext = Character.toString(chain.toCharArray()[b + 3]);
 
                     if (base.equals(baseOneStepNext) && base.equals(baseTwoStepsNext) && base.equals(baseThreeStepsNext)) {
-                        isMutantDNA = true;
-                        break;
+                        mutantDNACounter ++;
+
+                        if (mutantDNACounter == 2) {
+                            isMutantDNA = true;
+                            break;
+                        }
                     }
                 }
 
@@ -36,8 +41,12 @@ public class DNAAnalyzer {
                     String baseThreeStepsBelow = Character.toString(dnaMolecule[c + 3].toCharArray()[b]);
 
                     if (base.equals(baseOneStepBelow) && base.equals(baseTwoStepsBelow) && base.equals(baseThreeStepsBelow)) {
-                        isMutantDNA = true;
-                        break;
+                        mutantDNACounter ++;
+
+                        if (mutantDNACounter == 2) {
+                            isMutantDNA = true;
+                            break;
+                        }
                     }
                 }
 
@@ -48,8 +57,12 @@ public class DNAAnalyzer {
                     String baseThreeStepDiagonalEast = Character.toString(dnaMolecule[c + 3].toCharArray()[b + 3]);
 
                     if (base.equals(baseOneStepDiagonalEast) && base.equals(baseTwoStepDiagonalEast) && base.equals(baseThreeStepDiagonalEast)) {
-                        isMutantDNA = true;
-                        break;
+                        mutantDNACounter ++;
+
+                        if (mutantDNACounter == 2) {
+                            isMutantDNA = true;
+                            break;
+                        }
                     }
                 }
 
@@ -60,8 +73,12 @@ public class DNAAnalyzer {
                     String baseThreeStepDiagonalWest = Character.toString(dnaMolecule[c + 3].toCharArray()[b - 3]);
 
                     if (base.equals(baseOneStepDiagonalWest) && base.equals(baseTwoStepDiagonalWest) && base.equals(baseThreeStepDiagonalWest)) {
-                        isMutantDNA = true;
-                        break;
+                        mutantDNACounter ++;
+
+                        if (mutantDNACounter == 2) {
+                            isMutantDNA = true;
+                            break;
+                        }
                     }
                 }
             }
