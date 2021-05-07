@@ -11,7 +11,7 @@ public class DNAMutantDetector {
             "TTATGT",
             "AGTCGG",
             "CTCTTA",
-            "TCACTG"
+            "CCACTG"
         });
 
         System.out.printf("The DNA is from a mutant? %b", thisIsAMutant);
