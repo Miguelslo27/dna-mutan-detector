@@ -1,5 +1,5 @@
 package com.dna.analyzer.classes;
 
-public class DNA {
+public class Genoma {
 	public String[] dna;
 }
