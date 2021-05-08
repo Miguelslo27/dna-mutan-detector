@@ -5,8 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
-	public Connection getConnection() {
-		Connection connection = null;
+	public static Connection connection = null;
+
+	public static Connection getConnection() {
+		if (connection != null) return connection;
 		
 		try {
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dna_registry", "root", "");

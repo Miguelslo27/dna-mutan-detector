@@ -1,6 +1,5 @@
 package com.dna.analyzer.classes;
 
-import java.sql.Connection;
 import java.util.Arrays;
 
 public class DNAAnalyzer {
@@ -9,12 +8,6 @@ public class DNAAnalyzer {
     public static boolean isMutant(String[] dnaMolecule) throws Exception {
         boolean isMutantDNA = false;
         int mutantDNACounter = 0;
-        DBConnection dbconnection = new DBConnection();
-
-        try (Connection db = dbconnection.getConnection()) {}
-        catch (Exception e) {
-        	throw e;
-        }
 
         if (!isValidDNA(dnaMolecule)) {
             throw new Exception("The DNA Molecule is defective");

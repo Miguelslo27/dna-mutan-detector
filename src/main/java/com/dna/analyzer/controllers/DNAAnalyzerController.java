@@ -25,9 +25,9 @@ public class DNAAnalyzerController {
 		consumes = {MediaType.APPLICATION_JSON_VALUE}
 	)
 	@ResponseBody
-	public ResponseEntity<HttpStatus.Series> isMutant(@RequestBody Genome dna) {
+	public ResponseEntity<HttpStatus.Series> isMutant(@RequestBody Genome genome) {
 		try {
-			boolean isAMutant = DNAAnalyzer.isMutant(dna.dna);
+			boolean isAMutant = DNAAnalyzer.isMutant(genome.dna);
 
 			if (isAMutant) {
 				return new ResponseEntity<Series>(HttpStatus.OK);
