@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dna.analyzer.classes.Genoma;
+import com.dna.analyzer.classes.Genome;
 import com.dna.analyzer.classes.DNAAnalyzer;
 
 @RestController
@@ -25,7 +25,7 @@ public class DNAAnalyzerController {
 		consumes = {MediaType.APPLICATION_JSON_VALUE}
 	)
 	@ResponseBody
-	public ResponseEntity<HttpStatus.Series> isMutant(@RequestBody Genoma dna) {
+	public ResponseEntity<HttpStatus.Series> isMutant(@RequestBody Genome dna) {
 		try {
 			boolean isAMutant = DNAAnalyzer.isMutant(dna.dna);
 

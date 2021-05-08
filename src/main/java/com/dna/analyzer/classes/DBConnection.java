@@ -12,7 +12,7 @@ public class DBConnection {
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dna_registry", "root", "");
 			
 			if (connection != null) {
-				System.out.println("Connected!");
+				System.out.println("No errors connecting to the Data Base!");
 			}
 		} catch (SQLException e) {
 			System.out.println(e);
