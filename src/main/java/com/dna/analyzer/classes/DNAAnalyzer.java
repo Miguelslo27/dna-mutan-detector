@@ -1,3 +1,5 @@
+package com.dna.analyzer.classes;
+
 import java.util.Arrays;
 
 public class DNAAnalyzer {
