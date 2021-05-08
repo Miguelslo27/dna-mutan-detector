@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dna.analyzer.classes.Genome;
+import com.dna.analyzer.classes.GenomeService;
 import com.dna.analyzer.classes.DNAAnalyzer;
 
 @RestController
@@ -20,22 +21,27 @@ public class DNAAnalyzerController {
 		return "Mutant checker API";
 	}
 
-	@PostMapping(
-		value = "/mutant",
-		consumes = {MediaType.APPLICATION_JSON_VALUE}
-	)
+	@PostMapping(value = "/mutant", consumes = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
-	public ResponseEntity<HttpStatus.Series> isMutant(@RequestBody Genome genome) {
+	public ResponseEntity<HttpStatus.Series> isMutant(@RequestBody Genome genome) throws Exception {
+		ResponseEntity<HttpStatus.Series> response = null;
+
 		try {
 			boolean isAMutant = DNAAnalyzer.isMutant(genome.dna);
 
 			if (isAMutant) {
-				return new ResponseEntity<Series>(HttpStatus.OK);
+				genome.is_mutant = true;
+				response = new ResponseEntity<Series>(HttpStatus.OK);
 			} else {
-				return new ResponseEntity<Series>(HttpStatus.FORBIDDEN);
+				genome.is_human = true;
+				response = new ResponseEntity<Series>(HttpStatus.FORBIDDEN);
 			}
 		} catch (Exception e) {
-			return new ResponseEntity<Series>(HttpStatus.BAD_REQUEST);
+			genome.is_defective = true;
+			response = new ResponseEntity<Series>(HttpStatus.BAD_REQUEST);
 		}
+
+		GenomeService.createGenome(genome);
+		return response;
 	}
 }
