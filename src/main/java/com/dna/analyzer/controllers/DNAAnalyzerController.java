@@ -44,4 +44,9 @@ public class DNAAnalyzerController {
 		GenomeService.createGenome(genome);
 		return response;
 	}
+
+	@GetMapping("/stats")
+	public String getStats() {
+		return "Stats";
+	}
 }
