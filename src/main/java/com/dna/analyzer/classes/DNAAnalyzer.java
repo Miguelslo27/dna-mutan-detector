@@ -1,4 +1,4 @@
-package com.dna.analyzer;
+package com.dna.analyzer.classes;
 
 import java.util.Arrays;
 
