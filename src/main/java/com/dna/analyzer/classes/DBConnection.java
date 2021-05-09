@@ -9,7 +9,7 @@ public class DBConnection {
 		Connection connection = null;
 		
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dna_registry", "root", "");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dna_registry", "admin", "testadmin1234");
 			
 			if (connection != null) {
 				System.out.println("No errors connecting to the Data Base!");
