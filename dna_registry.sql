@@ -31,7 +31,7 @@ USE `dna_registry`;
 
 DROP TABLE IF EXISTS `genomes`;
 CREATE TABLE `genomes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `dna` text NOT NULL,
   `is_mutant` tinyint(1) NOT NULL,
   `is_human` tinyint(1) NOT NULL,
@@ -51,6 +51,17 @@ ALTER TABLE `genomes`
   ADD KEY `is_mutant` (`is_mutant`),
   ADD KEY `is_human` (`is_human`),
   ADD KEY `is_defective` (`is_defective`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `genomes`
+--
+ALTER TABLE `genomes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

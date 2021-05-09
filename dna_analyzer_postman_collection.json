@@ -82,7 +82,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"dna\": [\r\n        \"ATGCGA\",\r\n        \"CAGTTC\",\r\n        \"TTATGT\",\r\n        \"AGACG\",\r\n        \"CTCTTA\",\r\n        \"CCACTG\"\r\n    ]\r\n}",
+					"raw": "{\r\n    \"dna\": [\r\n        \"ATGCGA\",\r\n        \"CAGTTC\",\r\n        \"TTATGT\",\r\n        \"AGACGG\",\r\n        \"CTCTTA\",\r\n        \"CCACTG\"\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
