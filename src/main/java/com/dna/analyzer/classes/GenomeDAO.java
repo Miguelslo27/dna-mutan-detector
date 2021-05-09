@@ -2,6 +2,7 @@ package com.dna.analyzer.classes;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,8 +38,31 @@ public class GenomeDAO {
 		}
 	}
 
-	public static Genome[] getGenomesDB() {
-		Genome[] genomes = null;
-		return genomes;
+	public static AnalycisStats getGenomesStats() throws Exception {
+		AnalycisStats analycis = null;
+		try (Connection db = DBConnection.getConnection()) {
+			PreparedStatement statement = null;
+			ResultSet result = null;
+
+			String query = "SELECT" + " SUM(CASE WHEN is_mutant = 1 THEN 1 ELSE 0 END) as count_mutant_dna,"
+					+ " SUM(CASE WHEN is_human = 1 THEN 1 ELSE 0 END) as count_human_dna" + " FROM genomes LIMIT 1";
+
+			statement = db.prepareStatement(query);
+			result = statement.executeQuery();
+
+			int countMutantDNA = 0;
+			int countHumanDNA = 0;
+
+			if (result.next()) {
+				countMutantDNA = result.getInt("count_mutant_dna");
+				countHumanDNA = result.getInt("count_human_dna");
+			}
+
+			analycis = new AnalycisStats(countMutantDNA, countHumanDNA);
+		} catch (SQLException e) {
+			throw e;
+		}
+
+		return analycis;
 	}
 }
