@@ -1,0 +1,124 @@
+{
+	"info": {
+		"_postman_id": "14fdd864-cdf7-485c-87e4-b4fdd3e78cf2",
+		"name": "DNAAnalyzer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API Status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					]
+				},
+				"description": "    "
+			},
+			"response": []
+		},
+		{
+			"name": "Post Mutant DNA to analyze",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"dna\": [\r\n        \"ATGCGA\",\r\n        \"CAGTTC\",\r\n        \"TTATGT\",\r\n        \"AGTCGG\",\r\n        \"CTCTTA\",\r\n        \"CCACTG\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/mutant",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mutant"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Human DNA to analyze",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"dna\": [\r\n        \"ATGCGA\",\r\n        \"CAGTTC\",\r\n        \"TTATGT\",\r\n        \"AGACGG\",\r\n        \"CTCTTA\",\r\n        \"CCACTG\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/mutant",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mutant"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Defective DNA to analyze",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"dna\": [\r\n        \"ATGCGA\",\r\n        \"CAGTTC\",\r\n        \"TTATGT\",\r\n        \"AGACG\",\r\n        \"CTCTTA\",\r\n        \"CCACTG\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/mutant",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mutant"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get DNA Registry Stats",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}/stats",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"stats"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

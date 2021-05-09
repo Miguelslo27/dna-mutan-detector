@@ -4,9 +4,8 @@ public class GenomeService {
 	public static void createGenome(Genome genome) throws Exception {
 		GenomeDAO.createGenomeDB(genome);
 	}
-	
-	public static Genome[] getGenomes() throws Exception {
-		Genome[] genomes = null;
-		return genomes;
+
+	public static AnalycisStats getGenomesStats() throws Exception {
+		return GenomeDAO.getGenomesStats();
 	}
 }
