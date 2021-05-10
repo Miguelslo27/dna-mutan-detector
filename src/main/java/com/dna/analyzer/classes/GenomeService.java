@@ -2,7 +2,7 @@ package com.dna.analyzer.classes;
 
 public class GenomeService {
 	public static void createGenome(Genome genome) throws Exception {
-		GenomeDAO.createGenomeDB(genome);
+		GenomeDAO.createGenome(genome);
 	}
 
 	public static AnalycisStats getGenomesStats() throws Exception {
