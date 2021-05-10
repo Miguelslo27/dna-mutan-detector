@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class GenomeDAO {
-	public static void createGenomeDB(Genome genome) throws Exception {
+	public static void createGenome(Genome genome) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
 
 		try (Connection db = DBConnection.getConnection()) {

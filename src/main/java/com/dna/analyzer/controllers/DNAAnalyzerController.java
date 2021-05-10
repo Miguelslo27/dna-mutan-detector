@@ -43,7 +43,12 @@ public class DNAAnalyzerController {
 			response = new ResponseEntity<Series>(HttpStatus.BAD_REQUEST);
 		}
 
-		GenomeService.createGenome(genome);
+		try {
+			GenomeService.createGenome(genome);
+		} catch (Exception e) {
+			response = new ResponseEntity<Series>(HttpStatus.BAD_REQUEST);
+		}
+
 		return response;
 	}
 
