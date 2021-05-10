@@ -6,8 +6,14 @@ public class AnalycisStats {
 	public float ratio;
 
 	public AnalycisStats(int count_mutant_dna, int count_human_dna) {
-		this.count_mutant_dna = count_mutant_dna;
-		this.count_human_dna = count_human_dna;
-		this.ratio = count_mutant_dna / count_human_dna;
+		try {
+			this.count_mutant_dna = count_mutant_dna;
+			this.count_human_dna = count_human_dna;
+			this.ratio = count_mutant_dna / count_human_dna;
+		} catch (Exception e) {
+			this.count_mutant_dna = count_mutant_dna;
+			this.count_human_dna = count_human_dna;
+			this.ratio = 0;
+		}
 	}
 }
