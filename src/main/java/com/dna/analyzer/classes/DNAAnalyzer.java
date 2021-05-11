@@ -30,15 +30,15 @@ public class DNAAnalyzer {
 		return isMutantDNA;
 	}
 
-	public static boolean isAMutantDNATraceInMolecule(String[] dnaMolecule, String chain, int chain_index, char base,
-			int base_index) {
+	public static boolean isAMutantDNATraceInMolecule(String[] dnaMolecule, String chain, int chainIndex, char base,
+			int baseIndex) {
 		boolean isMutantTrace = false;
 
 		// Test the row
-		if (base_index + 3 < chain.length()) {
+		if (baseIndex + 3 < chain.length()) {
 			isMutantTrace = true; // start assuming there is a mutant trace
 			for (int i = 1; i <= 3; i++) {
-				char nextBase = chain.charAt(base_index + i);
+				char nextBase = chain.charAt(baseIndex + i);
 				if (base != nextBase) {
 					isMutantTrace = false;
 				}
@@ -46,10 +46,10 @@ public class DNAAnalyzer {
 		}
 
 		// Test the column
-		if (chain_index + 3 < dnaMolecule.length) {
+		if (chainIndex + 3 < dnaMolecule.length) {
 			isMutantTrace = true;
 			for (int i = 1; i <= 3; i++) {
-				char nextBase = dnaMolecule[chain_index + i].charAt(base_index);
+				char nextBase = dnaMolecule[chainIndex + i].charAt(baseIndex);
 				if (base != nextBase) {
 					isMutantTrace = false;
 				}
@@ -57,10 +57,10 @@ public class DNAAnalyzer {
 		}
 
 		// Test the diagonal east
-		if (base_index + 3 < chain.length() && chain_index + 3 < dnaMolecule.length) {
+		if (baseIndex + 3 < chain.length() && chainIndex + 3 < dnaMolecule.length) {
 			isMutantTrace = true;
 			for (int i = 1; i <= 3; i++) {
-				char nextBase = dnaMolecule[chain_index + i].charAt(base_index + i);
+				char nextBase = dnaMolecule[chainIndex + i].charAt(baseIndex + i);
 				if (base != nextBase) {
 					isMutantTrace = false;
 				}
@@ -68,17 +68,16 @@ public class DNAAnalyzer {
 		}
 
 		// Test the diagonal west
-		if (base_index - 3 > 0 && chain_index + 3 < dnaMolecule.length) {
+		if (baseIndex - 3 > 0 && chainIndex + 3 < dnaMolecule.length) {
 			isMutantTrace = true;
 			for (int i = 1; i <= 3; i++) {
-				char nextBase = dnaMolecule[chain_index + i].charAt(base_index - 1);
+				char nextBase = dnaMolecule[chainIndex + i].charAt(baseIndex - 1);
 				if (base != nextBase) {
 					isMutantTrace = false;
 				}
 			}
 		}
 
-		System.out.println("So true?");
 		return isMutantTrace;
 	}
 
