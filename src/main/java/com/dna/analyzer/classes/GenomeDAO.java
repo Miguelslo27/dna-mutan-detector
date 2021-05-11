@@ -33,7 +33,7 @@ public class GenomeDAO {
 			PreparedStatement statement = null;
 			ResultSet result = null;
 
-			String query = "SELECT SUM(is_mutant), SUM(is_human) FROM genomes WHERE is_defective = 0";
+			String query = "SELECT SUM(is_mutant) as count_mutant_dna, SUM(is_human) as count_human_dna FROM genomes WHERE is_defective = 0";
 
 			statement = db.prepareStatement(query);
 			result = statement.executeQuery();
@@ -42,8 +42,8 @@ public class GenomeDAO {
 			int countHumanDNA = 0;
 
 			if (result.next()) {
-				countMutantDNA = result.getInt("is_mutant");
-				countHumanDNA = result.getInt("is_human");
+				countMutantDNA = result.getInt("count_mutant_dna");
+				countHumanDNA = result.getInt("count_human_dna");
 			}
 
 			analysis = new AnalysisStats(countMutantDNA, countHumanDNA);
