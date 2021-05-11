@@ -14,25 +14,14 @@ public class GenomeDAO {
 		try (Connection db = DBConnection.getConnection()) {
 			PreparedStatement statement = null;
 			String query = "INSERT INTO genomes (dna, is_mutant, is_human, is_defective) values (?, ?, ?, ?)";
+			String genomestr = mapper.writeValueAsString(genome.dna);
 
-			try {
-				String genomestr = mapper.writeValueAsString(genome.dna);
-
-				try {
-					statement = db.prepareStatement(query);
-					statement.setString(1, genomestr);
-					statement.setBoolean(2, genome.is_mutant);
-					statement.setBoolean(3, genome.is_human);
-					statement.setBoolean(4, genome.is_defective);
-					statement.executeUpdate();
-
-					System.out.println("Genome saved to the registry!");
-				} catch (SQLException e) {
-					throw e;
-				}
-			} catch (Exception e) {
-				throw e;
-			}
+			statement = db.prepareStatement(query);
+			statement.setString(1, genomestr);
+			statement.setBoolean(2, genome.is_mutant);
+			statement.setBoolean(3, genome.is_human);
+			statement.setBoolean(4, genome.is_defective);
+			statement.executeUpdate();
 		} catch (SQLException e) {
 			throw e;
 		}
