@@ -14,7 +14,6 @@ import com.dna.analyzer.classes.Genome;
 import com.dna.analyzer.classes.GenomeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.dna.analyzer.classes.AnalysisStats;
-import com.dna.analyzer.classes.DNAAnalyzer;
 
 @RestController
 public class DNAAnalyzerController {
@@ -25,31 +24,19 @@ public class DNAAnalyzerController {
 
 	@PostMapping(value = "/mutant", consumes = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
-	public ResponseEntity<HttpStatus.Series> isMutant(@RequestBody Genome genome) throws Exception {
-		ResponseEntity<HttpStatus.Series> response = null;
-
-		try {
-			boolean isAMutant = DNAAnalyzer.isMutant(genome.dna);
-
-			if (isAMutant) {
-				genome.is_mutant = true;
-				response = new ResponseEntity<Series>(HttpStatus.OK);
-			} else {
-				genome.is_human = true;
-				response = new ResponseEntity<Series>(HttpStatus.FORBIDDEN);
-			}
-		} catch (Exception e) {
-			genome.is_defective = true;
-			response = new ResponseEntity<Series>(HttpStatus.BAD_REQUEST);
+	public ResponseEntity<Series> isMutant(@RequestBody Genome genome) throws Exception {
+		switch (GenomeService.analyzeDNA(genome)) {
+		case "OK":
+			return new ResponseEntity<Series>(HttpStatus.OK);
+		case "FORBIDDEN":
+			return new ResponseEntity<Series>(HttpStatus.FORBIDDEN);
+		case "PROBABLY_DUPLICATED":
+			return new ResponseEntity<Series>(HttpStatus.FOUND);
+		case "DEFECTIVE":
+			return new ResponseEntity<Series>(HttpStatus.BAD_REQUEST);
+		default:
+			return new ResponseEntity<Series>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
-		try {
-			GenomeService.createGenome(genome);
-		} catch (Exception e) {
-			response = new ResponseEntity<Series>(HttpStatus.FOUND);
-		}
-
-		return response;
 	}
 
 	@GetMapping(value = "/stats", produces = { MediaType.APPLICATION_JSON_VALUE })

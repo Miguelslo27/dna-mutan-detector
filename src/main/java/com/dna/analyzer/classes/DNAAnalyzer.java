@@ -3,12 +3,11 @@ package com.dna.analyzer.classes;
 public class DNAAnalyzer {
 	private static int moleculeSize = 0;
 
-	public static boolean isMutant(String[] dnaMolecule) throws Exception {
-		boolean isMutantDNA = false;
+	public static boolean isMutant(String[] dnaMolecule) {
 		int mutantDNACounter = 0;
 
 		if (!isValidDNA(dnaMolecule)) {
-			throw new Exception("DNA is malformed");
+			return false;
 		}
 
 		// Check if is actually a mutant
@@ -27,7 +26,7 @@ public class DNAAnalyzer {
 			}
 		}
 
-		return isMutantDNA;
+		return false;
 	}
 
 	public static boolean isAMutantDNATraceInMolecule(String[] dnaMolecule, String chain, int chainIndex, char base,
