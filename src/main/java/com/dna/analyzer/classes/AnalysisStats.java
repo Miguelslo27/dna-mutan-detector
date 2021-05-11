@@ -2,12 +2,12 @@ package com.dna.analyzer.classes;
 
 import java.text.DecimalFormat;
 
-public class AnalycisStats {
+public class AnalysisStats {
 	public int count_mutant_dna;
 	public int count_human_dna;
 	public double ratio;
 
-	public AnalycisStats(double count_mutant_dna, double count_human_dna) {
+	public AnalysisStats(double count_mutant_dna, double count_human_dna) {
 		DecimalFormat decFormat = new DecimalFormat("###.#");
 
 		try {

@@ -5,7 +5,7 @@ public class GenomeService {
 		GenomeDAO.createGenome(genome);
 	}
 
-	public static AnalycisStats getGenomesStats() throws Exception {
+	public static AnalysisStats getGenomesStats() throws Exception {
 		return GenomeDAO.getGenomesStats();
 	}
 }

@@ -38,14 +38,13 @@ public class GenomeDAO {
 		}
 	}
 
-	public static AnalycisStats getGenomesStats() throws Exception {
-		AnalycisStats analycis = null;
+	public static AnalysisStats getGenomesStats() throws Exception {
+		AnalysisStats analysis = null;
 		try (Connection db = DBConnection.getConnection()) {
 			PreparedStatement statement = null;
 			ResultSet result = null;
 
-			String query = "SELECT" + " SUM(CASE WHEN is_mutant = 1 THEN 1 ELSE 0 END) as count_mutant_dna,"
-					+ " SUM(CASE WHEN is_human = 1 THEN 1 ELSE 0 END) as count_human_dna" + " FROM genomes LIMIT 1";
+			String query = "SELECT SUM(is_mutant), SUM(is_human) FROM genomes WHERE is_defective = 0";
 
 			statement = db.prepareStatement(query);
 			result = statement.executeQuery();
@@ -54,15 +53,15 @@ public class GenomeDAO {
 			int countHumanDNA = 0;
 
 			if (result.next()) {
-				countMutantDNA = result.getInt("count_mutant_dna");
-				countHumanDNA = result.getInt("count_human_dna");
+				countMutantDNA = result.getInt("is_mutant");
+				countHumanDNA = result.getInt("is_human");
 			}
 
-			analycis = new AnalycisStats(countMutantDNA, countHumanDNA);
+			analysis = new AnalysisStats(countMutantDNA, countHumanDNA);
 		} catch (SQLException e) {
 			throw e;
 		}
 
-		return analycis;
+		return analysis;
 	}
 }

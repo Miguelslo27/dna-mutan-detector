@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dna.analyzer.classes.Genome;
 import com.dna.analyzer.classes.GenomeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.dna.analyzer.classes.AnalycisStats;
+import com.dna.analyzer.classes.AnalysisStats;
 import com.dna.analyzer.classes.DNAAnalyzer;
 
 @RestController
@@ -46,7 +46,7 @@ public class DNAAnalyzerController {
 		try {
 			GenomeService.createGenome(genome);
 		} catch (Exception e) {
-			response = new ResponseEntity<Series>(HttpStatus.BAD_REQUEST);
+			response = new ResponseEntity<Series>(HttpStatus.FOUND);
 		}
 
 		return response;
@@ -55,7 +55,7 @@ public class DNAAnalyzerController {
 	@GetMapping(value = "/stats", produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
 	public String getStats() throws Exception {
-		AnalycisStats stats = GenomeService.getGenomesStats();
+		AnalysisStats stats = GenomeService.getGenomesStats();
 		ObjectMapper mapper = new ObjectMapper();
 		String statsstr = mapper.writeValueAsString(stats);
 		return statsstr;
