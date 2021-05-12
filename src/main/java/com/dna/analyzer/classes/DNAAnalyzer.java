@@ -1,122 +1,106 @@
 package com.dna.analyzer.classes;
 
-import java.util.Arrays;
-
 public class DNAAnalyzer {
-    private static int moleculeSize = 0;
+	private static int moleculeSize = 0;
 
-    public static boolean isMutant(String[] dnaMolecule) throws Exception {
-        boolean isMutantDNA = false;
-        int mutantDNACounter = 0;
+	public static boolean isMutant(String[] dnaMolecule) {
+		int mutantDNACounter = 0;
 
-        if (!isValidDNA(dnaMolecule)) {
-            throw new Exception("The DNA Molecule is defective");
-        }
+		if (!isValidDNA(dnaMolecule)) {
+			return false;
+		}
 
-        // Check if is actually a mutant
-        for (int c = 0; c < Arrays.stream(dnaMolecule).count(); c++) {
-            String chain = dnaMolecule[c];
+		// Check if is actually a mutant
+		for (int c = 0; c < dnaMolecule.length; c++) {
+			String chain = dnaMolecule[c];
 
-            for (int b = 0; b < chain.length(); b++) {
-                String base = Character.toString(chain.toCharArray()[b]);
+			for (int b = 0; b < chain.length(); b++) {
+				char base = chain.charAt(b);
 
-                // Test the row
-                if (b + 3 < chain.length()) {
-                    String baseOneStepNext = Character.toString(chain.toCharArray()[b + 1]);
-                    String baseTwoStepsNext = Character.toString(chain.toCharArray()[b + 2]);
-                    String baseThreeStepsNext = Character.toString(chain.toCharArray()[b + 3]);
+				if (isAMutantDNATraceInMolecule(dnaMolecule, chain, c, base, b)) {
+					mutantDNACounter++;
+					if (mutantDNACounter == 2) {
+						return true;
+					}
+				}
+			}
+		}
 
-                    if (base.equals(baseOneStepNext) && base.equals(baseTwoStepsNext) && base.equals(baseThreeStepsNext)) {
-                        mutantDNACounter ++;
+		return false;
+	}
 
-                        if (mutantDNACounter == 2) {
-                            isMutantDNA = true;
-                            break;
-                        }
-                    }
-                }
+	public static boolean isAMutantDNATraceInMolecule(String[] dnaMolecule, String chain, int chainIndex, char base,
+			int baseIndex) {
+		boolean isMutantTrace = false;
 
-                // Test the column
-                if (c + 3 < Arrays.stream(dnaMolecule).count()) {
-                    String baseOneStepBelow = Character.toString(dnaMolecule[c + 1].toCharArray()[b]);
-                    String baseTwoStepsBelow = Character.toString(dnaMolecule[c + 2].toCharArray()[b]);
-                    String baseThreeStepsBelow = Character.toString(dnaMolecule[c + 3].toCharArray()[b]);
+		// Test the row
+		if (baseIndex + 3 < chain.length()) {
+			isMutantTrace = true; // start assuming there is a mutant trace
+			for (int i = 1; i <= 3; i++) {
+				char nextBase = chain.charAt(baseIndex + i);
+				if (base != nextBase) {
+					isMutantTrace = false;
+				}
+			}
+		}
 
-                    if (base.equals(baseOneStepBelow) && base.equals(baseTwoStepsBelow) && base.equals(baseThreeStepsBelow)) {
-                        mutantDNACounter ++;
+		// Test the column
+		if (chainIndex + 3 < dnaMolecule.length) {
+			isMutantTrace = true;
+			for (int i = 1; i <= 3; i++) {
+				char nextBase = dnaMolecule[chainIndex + i].charAt(baseIndex);
+				if (base != nextBase) {
+					isMutantTrace = false;
+				}
+			}
+		}
 
-                        if (mutantDNACounter == 2) {
-                            isMutantDNA = true;
-                            break;
-                        }
-                    }
-                }
+		// Test the diagonal east
+		if (baseIndex + 3 < chain.length() && chainIndex + 3 < dnaMolecule.length) {
+			isMutantTrace = true;
+			for (int i = 1; i <= 3; i++) {
+				char nextBase = dnaMolecule[chainIndex + i].charAt(baseIndex + i);
+				if (base != nextBase) {
+					isMutantTrace = false;
+				}
+			}
+		}
 
-                // Test the diagonal east
-                if (b + 3 < chain.length() && c + 3 < Arrays.stream(dnaMolecule).count()) {
-                    String baseOneStepDiagonalEast = Character.toString(dnaMolecule[c + 1].toCharArray()[b + 1]);
-                    String baseTwoStepDiagonalEast = Character.toString(dnaMolecule[c + 2].toCharArray()[b + 2]);
-                    String baseThreeStepDiagonalEast = Character.toString(dnaMolecule[c + 3].toCharArray()[b + 3]);
+		// Test the diagonal west
+		if (baseIndex - 3 > 0 && chainIndex + 3 < dnaMolecule.length) {
+			isMutantTrace = true;
+			for (int i = 1; i <= 3; i++) {
+				char nextBase = dnaMolecule[chainIndex + i].charAt(baseIndex - 1);
+				if (base != nextBase) {
+					isMutantTrace = false;
+				}
+			}
+		}
 
-                    if (base.equals(baseOneStepDiagonalEast) && base.equals(baseTwoStepDiagonalEast) && base.equals(baseThreeStepDiagonalEast)) {
-                        mutantDNACounter ++;
+		return isMutantTrace;
+	}
 
-                        if (mutantDNACounter == 2) {
-                            isMutantDNA = true;
-                            break;
-                        }
-                    }
-                }
+	public static boolean isValidDNA(String[] dnaMolecule) {
+		String dnaAcceptableBases = "ATCG";
+		moleculeSize = dnaMolecule.length;
 
-                // Test the diagonal west
-                if (b - 3 > 0 && c + 3 < Arrays.stream(dnaMolecule).count()) {
-                    String baseOneStepDiagonalWest = Character.toString(dnaMolecule[c + 1].toCharArray()[b - 1]);
-                    String baseTwoStepDiagonalWest = Character.toString(dnaMolecule[c + 2].toCharArray()[b - 2]);
-                    String baseThreeStepDiagonalWest = Character.toString(dnaMolecule[c + 3].toCharArray()[b - 3]);
+		if (moleculeSize == 0) {
+			return false;
+		}
 
-                    if (base.equals(baseOneStepDiagonalWest) && base.equals(baseTwoStepDiagonalWest) && base.equals(baseThreeStepDiagonalWest)) {
-                        mutantDNACounter ++;
+		for (String chain : dnaMolecule) {
+			if (moleculeSize != chain.length()) {
+				return false;
+			}
 
-                        if (mutantDNACounter == 2) {
-                            isMutantDNA = true;
-                            break;
-                        }
-                    }
-                }
-            }
+			for (Character base : chain.toCharArray()) {
+				// Check the base type
+				if (!dnaAcceptableBases.contains(Character.toString(base))) {
+					return false;
+				}
+			}
+		}
 
-            if (isMutantDNA) break;
-        }
-
-        return isMutantDNA;
-    }
-
-    public static boolean isValidDNA(String[] dnaMolecule) throws Exception {
-        int chainLength = 0;
-        boolean isTheFirstChain = true;
-        boolean isValid = true;
-        String dnaAcceptableBases = "ATCG";
-        moleculeSize = (int) Arrays.stream(dnaMolecule).count();
-
-        for (String chain : dnaMolecule) {
-            if ((!isTheFirstChain && chainLength != chain.length()) || moleculeSize != chain.length()) {
-                isValid = false;
-                break;
-            }
-
-            if (isTheFirstChain) {
-                chainLength = chain.length();
-                isTheFirstChain = false;
-            }
-
-            for (Character base : chain.toCharArray()) {
-                // Check the base type
-                if (!dnaAcceptableBases.contains(Character.toString(base))) {
-                    throw new Exception("The DNA Molecule is defective");
-                }
-            }
-        }
-
-        return isValid;
-    }
+		return true;
+	}
 }
