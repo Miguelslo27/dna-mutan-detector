@@ -14,38 +14,26 @@ public class GenomeDAO {
 		try (Connection db = DBConnection.getConnection()) {
 			PreparedStatement statement = null;
 			String query = "INSERT INTO genomes (dna, is_mutant, is_human, is_defective) values (?, ?, ?, ?)";
+			String genomestr = mapper.writeValueAsString(genome.dna);
 
-			try {
-				String genomestr = mapper.writeValueAsString(genome.dna);
-
-				try {
-					statement = db.prepareStatement(query);
-					statement.setString(1, genomestr);
-					statement.setBoolean(2, genome.is_mutant);
-					statement.setBoolean(3, genome.is_human);
-					statement.setBoolean(4, genome.is_defective);
-					statement.executeUpdate();
-
-					System.out.println("Genome saved to the registry!");
-				} catch (SQLException e) {
-					throw e;
-				}
-			} catch (Exception e) {
-				throw e;
-			}
+			statement = db.prepareStatement(query);
+			statement.setString(1, genomestr);
+			statement.setBoolean(2, genome.is_mutant);
+			statement.setBoolean(3, genome.is_human);
+			statement.setBoolean(4, genome.is_defective);
+			statement.executeUpdate();
 		} catch (SQLException e) {
 			throw e;
 		}
 	}
 
-	public static AnalycisStats getGenomesStats() throws Exception {
-		AnalycisStats analycis = null;
+	public static AnalysisStats getGenomesStats() throws Exception {
+		AnalysisStats analysis = null;
 		try (Connection db = DBConnection.getConnection()) {
 			PreparedStatement statement = null;
 			ResultSet result = null;
 
-			String query = "SELECT" + " SUM(CASE WHEN is_mutant = 1 THEN 1 ELSE 0 END) as count_mutant_dna,"
-					+ " SUM(CASE WHEN is_human = 1 THEN 1 ELSE 0 END) as count_human_dna" + " FROM genomes LIMIT 1";
+			String query = "SELECT SUM(is_mutant) as count_mutant_dna, SUM(is_human) as count_human_dna FROM genomes WHERE is_defective = 0";
 
 			statement = db.prepareStatement(query);
 			result = statement.executeQuery();
@@ -58,11 +46,11 @@ public class GenomeDAO {
 				countHumanDNA = result.getInt("count_human_dna");
 			}
 
-			analycis = new AnalycisStats(countMutantDNA, countHumanDNA);
+			analysis = new AnalysisStats(countMutantDNA, countHumanDNA);
 		} catch (SQLException e) {
 			throw e;
 		}
 
-		return analycis;
+		return analysis;
 	}
 }
