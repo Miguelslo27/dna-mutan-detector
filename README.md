@@ -44,4 +44,4 @@ You can import to postman the JSON included in the REPO, there you will get some
   
 ## Testing the API in the cloud
   
-Using the same settings from Postamn, you should change the host in the request with the IP where the program is deployed (AWS EC2 ubuntu instance) 54.90.81.2
+Using the same settings from Postamn, you should change the host in the request with the IP where the program is deployed (AWS EC2 ubuntu instance) 52.91.63.47
